@@ -57,6 +57,7 @@ public class Menu {
               controller.login(username, password);
               break;
             case 3:
+              System.out.println(controller.pDocsToString());
               break;
             case 4:
               exit = true;
@@ -97,8 +98,27 @@ public class Menu {
               controller.create(titulo, controller.getLogeado(), contenido);
               break;
             case 2:
+              String users = "";
+              System.out.println("* * * * * Share * * * * *");
+              System.out.println("Ingrese el id del documento al que quiere conceder permisos");
+              Integer id = scan.nextInt();
+              System.out.println("Ingrese los usuarios separados por espacio");
+              scan.nextLine();
+              users += scan.nextLine();
+              System.out.println(
+                  "Ingrese permiso del tipo:\n[w]: escritura\n[r]: lectura\n[c]: comentarios");
+              String permiso = scan.nextLine();
+              String[] usuariosPermiso = users.split(" ");
+              controller.share(controller.getLogeado(), id, usuariosPermiso, permiso);
               break;
             case 3:
+              System.out.println("* * * * * Add * * * * *");
+              System.out.println("Ingrese el ID");
+              Integer idDoc = scan.nextInt();
+              System.out.println("Ingrese contenido");
+              scan.nextLine();
+              String text = scan.nextLine();
+              controller.add(controller.getLogeado(), idDoc, text);
               break;
             case 4:
               break;
@@ -107,6 +127,7 @@ public class Menu {
             case 6:
               break;
             case 7:
+              System.out.println(controller.editorString(controller.getLogeado()));
               break;
             case 8:
               break;
