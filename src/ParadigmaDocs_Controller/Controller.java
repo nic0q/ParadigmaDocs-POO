@@ -10,13 +10,13 @@ import ParadigmaDocs_Model.*;
  */
 public class Controller {
   // Atributos
-  private ParadigmaDocs paradigmaDocs;
+  private Editor paradigmaDocs;
 
   // Constructor
   /**
-   * @param paradigmaDoc instancia de la clase ParadigmaDocs
+   * @param paradigmaDocs instancia de la clase ParadigmaDocs
    */
-  public Controller(ParadigmaDocs paradigmaDocs) {
+  public Controller(Editor paradigmaDocs) {
     this.paradigmaDocs = paradigmaDocs;
   }
 
@@ -24,7 +24,7 @@ public class Controller {
   /**
    * @return ParadigmaDocs la plataforma
    */
-  public ParadigmaDocs getParadigmaDocs() {
+  public Editor getParadigmaDocs() {
     return paradigmaDocs;
   }
 
@@ -33,7 +33,7 @@ public class Controller {
    * @return boolean
    */
   public boolean isLogeado() {
-    ParadigmaDocs pDocs = getParadigmaDocs();
+    Editor pDocs = getParadigmaDocs();
     return pDocs.isConectado();
   }
 
@@ -41,7 +41,7 @@ public class Controller {
    * @return Usuario
    */
   public Usuario getLogeado() {
-    ParadigmaDocs pDocs = getParadigmaDocs();
+    Editor pDocs = getParadigmaDocs();
     return pDocs.getLogeado();
 
   }
@@ -55,7 +55,7 @@ public class Controller {
    * @param password La contraseña del usuario
    */
   public void register(String username, String password) {
-    ParadigmaDocs pDocs = getParadigmaDocs();
+    Editor pDocs = getParadigmaDocs();
     for (int i = 0; i < pDocs.getUsuarios().size(); i++) {
       if (pDocs.getUsuarios().get(i).getUsername().equals(username)) {
         System.out.println("El username " + username + " ya existe");
@@ -73,7 +73,7 @@ public class Controller {
    * @param password La contraseña del usuario
    */
   public void login(String username, String password) {
-    ParadigmaDocs pDocs = getParadigmaDocs();
+    Editor pDocs = getParadigmaDocs();
     for (int i = 0; i < pDocs.getUsuarios().size(); i++) {
       if (pDocs.getUsuarios().get(i).getUsername().equals(username)
           && pDocs.getUsuarios().get(i).getPassword().equals(password)) {
@@ -90,7 +90,7 @@ public class Controller {
    * Método que permite cerrar sesión al usuario que tiene iniciada sesión
    */
   public void logout() {
-    ParadigmaDocs pDocs = getParadigmaDocs();
+    Editor pDocs = getParadigmaDocs();
     pDocs.setConectado(false);
   }
 
@@ -102,9 +102,8 @@ public class Controller {
    * @param contenido Contenido del documento a crear
    */
   public void create(String titulo, Usuario logeado, String contenido) {
-    ParadigmaDocs pDocs = getParadigmaDocs();
-    Documento doc = new Documento(titulo, contenido);
-    doc.setAutor(logeado);
+    Editor pDocs = getParadigmaDocs();
+    Documento doc = new Documento(titulo, contenido, logeado);
     logeado.getDocsCreados().add(doc);
     pDocs.getDocumentos().add(doc);
     System.out.println("Documento creado con exito");
@@ -119,7 +118,7 @@ public class Controller {
    * @param access          permiso otorgado [w|r|c]
    */
   public void share(Usuario logeado, Integer id, String[] usuariosPermiso, String access) {
-    ParadigmaDocs pDocs = getParadigmaDocs();
+    Editor pDocs = getParadigmaDocs();
     // Se comprueban los permisos
     if (!(access.equals("w") || access.equals("c") || access.equals("r"))) {
       System.out.println("El permiso ingresado no es del tipo [w, r, c]");
@@ -169,7 +168,7 @@ public class Controller {
    * permiso de edición.
    * 
    * @param logeado   Usuario logeado
-   * @param idd       Id del documento
+   * @param id        Id del documento
    * @param contenido Contenido del documento
    */
 
@@ -196,6 +195,79 @@ public class Controller {
     }
     System.out.println("Operacion no exitosa");
     return;
+  }
+
+  /**
+   * Método que permite restaurar una version anterior del documento, es decir
+   * esta pasa a ser la versión activa
+   * 
+   * @param logeado Usuario logeado
+   * @param id      Id del documento
+   * @param idVer   Id de la version
+   */
+  public void rollback(Usuario logeado, Integer id, Integer idVer) {
+    int index = getIndexDocCreados(id, logeado);
+    if (index == -1) {
+      System.out.println("Documento no existe");
+      return;
+    }
+    for (int i = 0; i < logeado.getDocsCreados().get(index).getHistorial().size(); i++) {
+      if (logeado.getDocsCreados().get(index).getHistorial().get(i).getId().equals(idVer)) {
+        String contenido = logeado.getDocsCreados().get(index).getHistorial().get(i).getContenido();
+        logeado.getDocsCreados().get(index).setContenido(contenido);
+        System.out.println(contenido);
+        return;
+      }
+    }
+    System.out.println("No se hizo rollback"); // Pendiente: Verificar si esto vale la pena o no
+    return;
+  }
+
+  /**
+   * Método que permite revocar todos los accesos a un documento
+   * 
+   * @param logeado Usuario logeado
+   * @param id      Id del documento
+   */
+  public void revokeAccess(Usuario logeado, Integer id) {
+    int index = getIndexDocCreados(id, logeado);
+    if (index == -1) {
+      System.out.println("Documento no existe");
+      return;
+    }
+    logeado.getDocsCreados().get(index).getAccesses().clear();
+    ;
+    System.out.println("Acccesos revocados del documento (" + id + ") Satisfactorio");
+  }
+
+  /**
+   * Método que permite buscar texto en un documento propio o compartido
+   * 
+   * @param logeado    Usuario logeado
+   * @param searchText Texto a buscar
+   */
+
+  // Visualize:
+
+  public void search(Usuario logeado, String searchText) {
+    int found = 0;
+    for (int i = 0; i < logeado.getDocsCreados().size(); i++) {
+      if (logeado.getDocsCreados().get(i).getContenido().contains(searchText)) {
+        System.out.println("Se ha encontrado " + searchText + " -> documento " + logeado
+            .getDocsCreados().get(i).getTitulo() + "(" + logeado.getDocsCreados().get(i).getId() + ")");
+        found = 1;
+      }
+    }
+    for (int i = 0; i < logeado.getDocsAcceso().size(); i++) {
+      if (logeado.getDocsAcceso().get(i).getContenido().contains(searchText)) {
+        System.out.println("Se ha encontrado " + searchText + " -> documento " + logeado
+            .getDocsAcceso().get(i).getTitulo() + "(" + logeado.getDocsAcceso().get(i).getId() + ")");
+        found = 1;
+      }
+    }
+    if (found != 1) {
+      System.out.println("No se ha encontrado texto");
+    }
   }
 
   /**

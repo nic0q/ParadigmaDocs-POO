@@ -30,13 +30,14 @@ public class Documento {
    * @param titulo    titulo de un documento
    * @param contenido contenido de un documento
    */
-  public Documento(String titulo, String contenido) {
+  public Documento(String titulo, String contenido, Usuario autor) {
     SimpleDateFormat formatFecha = new SimpleDateFormat("dd/MM/yyyy");
     Date date = new Date();
     idCont = idCont + 1;
     this.id = idCont;
     this.fecha = formatFecha.format(date);
     this.titulo = titulo;
+    this.autor = autor;
     this.contenido = contenido;
     this.historial = new ArrayList<>();
     this.permisos = new ArrayList<>();

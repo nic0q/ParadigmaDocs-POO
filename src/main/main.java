@@ -6,7 +6,7 @@ import ParadigmaDocs_View.Menu;
 
 public class main {
   public static void main(String[] args) {
-    ParadigmaDocs pDocs = new ParadigmaDocs();
+    Editor pDocs = new Editor();
     Controller controller = new Controller(pDocs);
     Menu menu = new Menu(controller);
     menu.menu();

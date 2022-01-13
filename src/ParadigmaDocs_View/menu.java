@@ -115,16 +115,31 @@ public class Menu {
               System.out.println("* * * * * Add * * * * *");
               System.out.println("Ingrese el ID");
               Integer idDoc = scan.nextInt();
-              System.out.println("Ingrese contenido");
+              System.out.println("Ingrese el contenido a añadir");
               scan.nextLine();
               String text = scan.nextLine();
               controller.add(controller.getLogeado(), idDoc, text);
               break;
             case 4:
+              System.out.println("* * * * * Rollback * * * * *");
+              System.out.println("Ingrese id documento");
+              Integer idDocc = scan.nextInt();
+              System.out.println("Ingrese id version para rollback");
+              Integer idVer = scan.nextInt();
+              controller.rollback(controller.getLogeado(), idDocc, idVer);
               break;
             case 5:
+              System.out.println("* * * * * Revoke Access * * * * *");
+              System.out.println("Ingrese id documento");
+              Integer idDc = scan.nextInt();
+              controller.revokeAccess(controller.getLogeado(), idDc);
               break;
             case 6:
+              System.out.println("* * * * * Search * * * * *");
+              System.out.println("Ingrese texto a buscar");
+              scan.nextLine();
+              String searchText = scan.nextLine();
+              controller.search(controller.getLogeado(), searchText);
               break;
             case 7:
               System.out.println(controller.editorString(controller.getLogeado()));
