@@ -30,14 +30,6 @@ public class Controller {
 
   // Métodos
   /**
-   * @return boolean
-   */
-  public boolean isLogeado() {
-    Editor pDocs = getParadigmaDocs();
-    return pDocs.isConectado();
-  }
-
-  /**
    * @return Usuario
    */
   public Usuario getLogeado() {
@@ -130,6 +122,13 @@ public class Controller {
           for (int j = 0; j < pDocs.getUsuarios().size(); j++) {
             if (pDocs.getUsuarios().get(j).getUsername().equals(usuariosPermiso[k])
                 && !usuariosPermiso[k].equals(logeado.getUsername())) {
+              // Se busca si ya tiene acceso
+              for (int l = 0; l < logeado.getDocsCreados().get(i).getAccesses().size(); l++) {
+                if (logeado.getDocsCreados().get(i).getAccesses().get(l).getUser().getUsername()
+                    .equals(usuariosPermiso[k])) {
+                  logeado.getDocsCreados().get(i).getAccesses().remove(l);
+                }
+              }
               Acceso acceso = new Acceso(pDocs.getUsuarios().get(j), access);
               logeado.getDocsCreados().get(i).getAccesses().add(acceso);
               pDocs.getUsuarios().get(j).getDocsAcceso().add(logeado.getDocsCreados().get(i));
@@ -139,28 +138,6 @@ public class Controller {
         }
       }
     }
-  }
-
-  /**
-   * Método que determina si un usuario es editor de un documento mediante su id
-   * 
-   * @param logeado Usuario logeado
-   * @param id      Id del documento
-   * @return boolean
-   */
-  public boolean isEditor(Usuario logeado, Integer id) {
-    for (int i = 0; i < logeado.getDocsAcceso().size(); i++) {
-      if (logeado.getDocsAcceso().get(i).getId() == id) {
-        for (int j = 0; j < logeado.getDocsAcceso().get(i).getAccesses().size(); j++) {
-          if (logeado.getDocsAcceso().get(i).getAccesses().get(i).getUser().equals(logeado)) {
-            if (logeado.getDocsAcceso().get(i).getAccesses().get(i).getPermiso().equals("w")) {
-              return true;
-            }
-          }
-        }
-      }
-    }
-    return false;
   }
 
   /**
@@ -371,6 +348,74 @@ public class Controller {
       }
     }
     return editorString;
+  }
+
+  /**
+   * Método que permite eliminar texto de la versión activa de un documento, se
+   * requiere permiso de edición.
+   * 
+   * @param logeado Usuario logeado
+   * @param id      Id del documento
+   * @param delete  Caracteres a eliminar
+   */
+  public void delete(Usuario logeado, Integer id, Integer delete) {
+    if (getIndexDocCreados(id, logeado) != -1) {
+      String contenidoAnt = logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).getContenido();
+      int largo = contenidoAnt.length();
+      String contenidoMod;
+      if (largo < delete) {
+        contenidoMod = "";
+      } else {
+        contenidoMod = contenidoAnt.substring(0, largo - delete);
+      }
+      Version version = new Version(contenidoMod);
+      version.setId(logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).getHistorial().size());
+      logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).getHistorial().add(version);
+      logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).setContenido(contenidoMod);
+      System.out.println(
+          "Se eliminaron " + delete + " caracteres, resultando: " + contenidoMod + " en documento id(" + id + ")");
+      return;
+    }
+    if (isEditor(logeado, id)) {
+      String contenidoAnt = logeado.getDocsAcceso().get(getIndexDocAcceso(id, logeado)).getContenido();
+      String contenidoMod;
+      int largo = contenidoAnt.length();
+      if (largo < delete) {
+        contenidoMod = "";
+      } else {
+        contenidoMod = contenidoAnt.substring(0, largo - delete);
+      }
+      Version version = new Version(contenidoMod);
+      version.setId(logeado.getDocsAcceso().get(getIndexDocAcceso(id, logeado)).getHistorial().size());
+      logeado.getDocsAcceso().get(getIndexDocAcceso(id, logeado)).getHistorial().add(version);
+      logeado.getDocsAcceso().get(getIndexDocAcceso(id, logeado)).setContenido(contenidoMod);
+      System.out.println(
+          "Se eliminaron " + delete + " caracteres, resultando '" + contenidoMod + "' en documento id(" + id + ")");
+      return;
+    }
+    System.out.println("Operacion no exitosa");
+  }
+
+  /**
+   * Método que determina si un usuario es editor de un documento mediante su id
+   * 
+   * @param logeado Usuario logeado
+   * @param id      Id del documento
+   * @return boolean
+   */
+  public boolean isEditor(Usuario logeado, Integer id) {
+    for (int i = 0; i < logeado.getDocsAcceso().size(); i++) {
+      if (logeado.getDocsAcceso().get(i).getId() == id) {
+        for (int j = 0; j < logeado.getDocsAcceso().get(i).getAccesses().size(); j++) {
+          if (logeado.getDocsAcceso().get(i).getAccesses().get(i).getUser().equals(logeado)) {
+            if (logeado.getDocsAcceso().get(i).getAccesses().get(i).getPermiso().equals("w")) {
+              return true;
+            }
+          }
+        }
+      }
+    }
+    return false;
   }
 
   /**

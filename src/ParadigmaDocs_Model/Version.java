@@ -18,34 +18,58 @@ public class Version {
     this.comentarios = new ArrayList<>();
   }
 
+  /**
+   * @return ArrayList<Comentario>
+   */
   public ArrayList<Comentario> getComentarios() {
     return comentarios;
   }
 
+  /**
+   * @param comentarios
+   */
   public void setComentarios(ArrayList<Comentario> comentarios) {
     this.comentarios = comentarios;
   }
 
+  /**
+   * @return String
+   */
   public String getFecha() {
     return fecha;
   }
 
+  /**
+   * @param fecha
+   */
   public void setFecha(String fecha) {
     this.fecha = fecha;
   }
 
+  /**
+   * @return String
+   */
   public String getContenido() {
     return contenido;
   }
 
+  /**
+   * @param contenido
+   */
   public void setContenido(String contenido) {
     this.contenido = contenido;
   }
 
+  /**
+   * @return Integer
+   */
   public Integer getId() {
     return id;
   }
 
+  /**
+   * @param id
+   */
   public void setId(Integer id) {
     this.id = id;
   }

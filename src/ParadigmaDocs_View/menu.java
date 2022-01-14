@@ -27,7 +27,7 @@ public class Menu {
     String password;
     Controller controller = getController();
     while (!exit) {
-      if (!controller.isLogeado()) {
+      if (!controller.getLogeado().equals(null)) {
         System.out.println("### EDITOR COLABORATIVO ###");
         System.out.println("Escoja la opcion que desea realizar: ");
         System.out.println("1. Registrarse");

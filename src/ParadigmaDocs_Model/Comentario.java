@@ -18,38 +18,65 @@ public class Comentario {
     this.comentario = comentario;
   }
 
+  /**
+   * @return String
+   */
   public String getComentario() {
     return comentario;
   }
 
+  /**
+   * @param comentario
+   */
   public void setComentario(String comentario) {
     this.comentario = comentario;
   }
 
+  /**
+   * @return String
+   */
   public String getFecha() {
     return fecha;
   }
 
+  /**
+   * @param fecha
+   */
   public void setFecha(String fecha) {
     this.fecha = fecha;
   }
 
+  /**
+   * @return Usuario
+   */
   public Usuario getAutor() {
     return autor;
   }
 
+  /**
+   * @param autor
+   */
   public void setAutor(Usuario autor) {
     this.autor = autor;
   }
 
+  /**
+   * @return String
+   */
   public String getContenido() {
     return contenido;
   }
 
+  /**
+   * @param contenido
+   */
   public void setContenido(String contenido) {
     this.contenido = contenido;
   }
 
+  /**
+   * @return String
+   */
   @Override
   public String toString() {
     return " * * Comentario * * \n\t[" + autor.getUsername() + "] [" + fecha + "]" + "\n\t*" + contenido + "* -> ["

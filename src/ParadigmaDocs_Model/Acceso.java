@@ -13,27 +13,45 @@ public class Acceso {
     this.permiso = access;
   }
 
+  /**
+   * @return Usuario
+   */
   public Usuario getUser() {
     return user;
   }
 
+  /**
+   * @param user
+   */
   public void setUser(Usuario user) {
     this.user = user;
   }
 
+  /**
+   * @return String
+   */
   public String getPermiso() {
     return permiso;
   }
 
+  /**
+   * @param permiso
+   */
   public void setPermiso(String permiso) {
     this.permiso = permiso;
   }
 
+  /**
+   * @return String
+   */
   @Override
   public String toString() {
     return "Acceso [permisos=" + permiso + ", user=" + user + "]";
   }
 
+  /**
+   * @return String
+   */
   public String accessToString() {
     String permiso = this.getPermiso();
     if (permiso.equals("w")) {

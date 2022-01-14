@@ -32,7 +32,9 @@ public class Documento {
    */
   public Documento(String titulo, String contenido, Usuario autor) {
     SimpleDateFormat formatFecha = new SimpleDateFormat("dd/MM/yyyy");
+    Version ver1 = new Version(contenido);
     Date date = new Date();
+    ver1.setId(0);
     idCont = idCont + 1;
     this.id = idCont;
     this.fecha = formatFecha.format(date);
@@ -41,8 +43,6 @@ public class Documento {
     this.contenido = contenido;
     this.historial = new ArrayList<>();
     this.permisos = new ArrayList<>();
-    Version ver1 = new Version(contenido);
-    ver1.setId(0);
     historial.add(ver1);
   }
 
