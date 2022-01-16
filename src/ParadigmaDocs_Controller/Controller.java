@@ -37,6 +37,11 @@ public class Controller {
     return pDocs.getLogeado();
 
   }
+
+  public boolean isLogeado() {
+    Editor pDocs = getParadigmaDocs();
+    return pDocs.isConectado();
+  }
   // Métodos
   // Register
 
@@ -231,7 +236,7 @@ public class Controller {
     for (int i = 0; i < logeado.getDocsCreados().size(); i++) {
       if (logeado.getDocsCreados().get(i).getContenido().contains(searchText)) {
         System.out.println("Se ha encontrado " + searchText + " -> documento " + logeado
-            .getDocsCreados().get(i).getTitulo() + "(" + logeado.getDocsCreados().get(i).getId() + ")");
+            .getDocsAcceso().get(i).getTitulo() + "(" + logeado.getDocsAcceso().get(i).getId() + ")");
         found = 1;
       }
     }
@@ -391,6 +396,48 @@ public class Controller {
       logeado.getDocsAcceso().get(getIndexDocAcceso(id, logeado)).setContenido(contenidoMod);
       System.out.println(
           "Se eliminaron " + delete + " caracteres, resultando '" + contenidoMod + "' en documento id(" + id + ")");
+      return;
+    }
+    System.out.println("Operacion no exitosa");
+  }
+
+  /**
+   * Método que permite buscar y reemplazar texto de la versión activa de un
+   * documento, se requiere permiso de edición.
+   * 
+   * @param logeado     Usuario logeado
+   * @param id          Id del documento
+   * @param searchText  Texto a buscar
+   * @param replaceText Texto a reemplazar
+   */
+  public void searchAndReplace(Usuario logeado, Integer id, String searchText, String replaceText) {
+    String reemplazo;
+    if (getIndexDocCreados(id, logeado) != -1) {
+      if (logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).getContenido().contains(searchText)) {
+        reemplazo = logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).getContenido().replace(searchText,
+            replaceText);
+        Version version = new Version(reemplazo);
+        version.setId(logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).getHistorial().size());
+        logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).getHistorial().add(version);
+        logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).setContenido(reemplazo);
+        System.out.println("Operacion Exitosa");
+        return;
+      }
+      System.out.println("El texto " + searchText + " no se encuentra en el documento de id(" + id + ")");
+      return;
+    }
+    if (isEditor(logeado, id)) {
+      if (logeado.getDocsAcceso().get(getIndexDocAcceso(id, logeado)).getContenido().contains(searchText)) {
+        reemplazo = logeado.getDocsAcceso().get(getIndexDocAcceso(id, logeado)).getContenido().replace(searchText,
+            replaceText);
+        Version version = new Version(reemplazo);
+        version.setId(logeado.getDocsAcceso().get(getIndexDocAcceso(id, logeado)).getHistorial().size());
+        logeado.getDocsAcceso().get(getIndexDocAcceso(id, logeado)).getHistorial().add(version);
+        logeado.getDocsAcceso().get(getIndexDocAcceso(id, logeado)).setContenido(reemplazo);
+        System.out.println("Operacion Exitosa");
+        return;
+      }
+      System.out.println("El texto " + searchText + " no se encuentra en el documento de id(" + id + ")");
       return;
     }
     System.out.println("Operacion no exitosa");
