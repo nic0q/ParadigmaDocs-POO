@@ -112,7 +112,7 @@ public class Editor {
   }
 
   /**
-   * @return Usuario
+   * @return Usuario logeado
    */
   public Usuario getLogeado() {
     return logeado;
@@ -126,7 +126,7 @@ public class Editor {
   }
 
   /**
-   * @return boolean
+   * @return boolean si esta conectado o no
    */
   public boolean isConectado() {
     return conectado;

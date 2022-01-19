@@ -14,7 +14,7 @@ public class Acceso {
   }
 
   /**
-   * @return Usuario
+   * @return Usuario que posee el acceso
    */
   public Usuario getUser() {
     return user;
@@ -28,7 +28,7 @@ public class Acceso {
   }
 
   /**
-   * @return String
+   * @return Tipo de permiso de usuario
    */
   public String getPermiso() {
     return permiso;

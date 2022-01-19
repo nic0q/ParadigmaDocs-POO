@@ -442,6 +442,59 @@ public class Controller {
     }
     System.out.println("Operacion no exitosa");
   }
+  /**
+   * Método que permite aplicar estilos a un texto de la versión activa de un
+   * documento, se requiere permiso de edición.
+   *
+   * @param logeado    Usuario logeado
+   * @param id         Id del documento
+   * @param searchText Texto a buscar
+   * @param styles     Estilos a aplicar
+   */
+  public void applyStyles(Usuario logeado, Integer id, String searchText, String[] styles) {
+    String styles_f = "";
+    int j = 0;
+    for (int i = 0; i < styles.length; i++) {
+      if ((styles[i].equals("#\\i") || styles[i].equals("#\\b") || styles[i].equals("#\\u"))) {
+        styles_f += styles[i];
+        j = 1;
+      }
+    }
+    if (j == 1) {
+      String stylesString = " [" + styles_f.toString() + "]" + searchText + "[" + styles_f.toString() + "] ";
+      searchAndReplace(logeado, id, searchText, stylesString);
+    } else {
+      System.out.println("Operacion no exitosa");
+    }
+  }
+
+  /**
+   * Método que permite comentar un texto de la versión activa, , se requiere
+   * permiso de comentarios.
+   *
+   * @param logeado    Usuario logeado
+   * @param id         Id del documento
+   * @param searchText Texto a buscar
+   * @param comentario Comentario
+   */
+  public void comment(Usuario logeado, Integer id, String searchText, String comentario) {
+    String reemplazo;
+    if (getIndexDocCreados(id, logeado) != -1) {
+      if (logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).getContenido().contains(searchText)) {
+        Comentario comentarios = new Comentario(logeado, searchText, comentario);
+        reemplazo = logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).getContenido().replace(searchText,
+                "*" + searchText + "*");
+        Version version = new Version(reemplazo);
+        version.setId(logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).getHistorial().size());
+        version.getComentarios().add(comentarios);
+        logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).getHistorial().add(version);
+        logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).setContenido(reemplazo);
+        System.out.println("Operacion Exitosa");
+        return;
+      }
+    }
+    System.out.println("Operacion no exitosa");
+  }
 
   /**
    * Método que determina si un usuario es editor de un documento mediante su id
