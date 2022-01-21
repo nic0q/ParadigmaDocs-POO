@@ -235,15 +235,16 @@ public class Controller {
     int found = 0;
     for (int i = 0; i < logeado.getDocsCreados().size(); i++) {
       if (logeado.getDocsCreados().get(i).getContenido().contains(searchText)) {
-        System.out.println("Se ha encontrado " + searchText + " -> documento " + logeado
-            .getDocsAcceso().get(i).getTitulo() + "(" + logeado.getDocsAcceso().get(i).getId() + ")");
+        System.out.println("id(" + logeado.getDocsCreados().get(i).getId() + ") " + logeado.getDocsCreados().get(i)
+            .getTitulo());
         found = 1;
       }
     }
     for (int i = 0; i < logeado.getDocsAcceso().size(); i++) {
       if (logeado.getDocsAcceso().get(i).getContenido().contains(searchText)) {
-        System.out.println("Se ha encontrado " + searchText + " -> documento " + logeado
-            .getDocsAcceso().get(i).getTitulo() + "(" + logeado.getDocsAcceso().get(i).getId() + ")");
+        System.out.println("id(" + logeado.getDocsAcceso().get(i).getId() + ") " + logeado.getDocsAcceso().get(i)
+            .getTitulo());
+
         found = 1;
       }
     }
@@ -442,6 +443,7 @@ public class Controller {
     }
     System.out.println("Operacion no exitosa");
   }
+
   /**
    * Método que permite aplicar estilos a un texto de la versión activa de un
    * documento, se requiere permiso de edición.
@@ -483,7 +485,7 @@ public class Controller {
       if (logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).getContenido().contains(searchText)) {
         Comentario comentarios = new Comentario(logeado, searchText, comentario);
         reemplazo = logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).getContenido().replace(searchText,
-                "*" + searchText + "*");
+            "*" + searchText + "*");
         Version version = new Version(reemplazo);
         version.setId(logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).getHistorial().size());
         version.getComentarios().add(comentarios);
