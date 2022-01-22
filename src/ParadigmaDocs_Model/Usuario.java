@@ -102,6 +102,4 @@ public class Usuario {
     return "Usuario [docsAcceso=" + docsAcceso + ", docsCreados=" + docsCreados + ", fecha=" + fecha + ", password="
         + password + ", username=" + username + "]";
   }
-
-  // Acceso [permisos=[w, r], user=ParadigmaDocs_Model.Usuario@59a6e353]
 }

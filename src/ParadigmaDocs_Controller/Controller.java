@@ -59,8 +59,8 @@ public class Controller {
         return;
       }
     }
-    Usuario nuevUsuario = new Usuario(username, password);
-    pDocs.getUsuarios().add(nuevUsuario);
+    Usuario nuevoUsuario = new Usuario(username, password);
+    pDocs.getUsuarios().add(nuevoUsuario);
   }
 
   /**

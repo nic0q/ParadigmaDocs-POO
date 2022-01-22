@@ -1,8 +1,12 @@
 package ParadigmaDocs_View;
 
+//import ParadigmaDocs_Model.*;
 import ParadigmaDocs_Controller.*;
 import java.util.Scanner;
 
+/**
+ * Menu
+ */
 public class Menu {
   private Controller controller;
 
@@ -73,7 +77,7 @@ public class Menu {
         System.out.println("### EDITOR COLABORATIVO ###");
         System.out.println("## Registrado como: " + controller.getLogeado().getUsername() + " ##");
         System.out.println("1.  Crear nuevo documento");
-        System.out.println("2.  Compartir documento");
+        System.out.println("2.  Compartir documento [write, read, comment]");
         System.out.println("3.  Agregar contenido a un documento");
         System.out.println("4.  Restaurar version de un documento");
         System.out.println("5.  Revocar acceso a un documento");
@@ -81,7 +85,7 @@ public class Menu {
         System.out.println("7.  Visualizar documentos");
         System.out.println("8.  Eliminar ultimos caracteres documento");
         System.out.println("9.  Buscar y reemplazar texto");
-        System.out.println("10. Aplicar Estilos (italic, bold, underlined)");
+        System.out.println("10. Aplicar Estilos [italic, bold, underlined]");
         System.out.println("11. Agregar comentario a documento");
         System.out.println("12. Cerrar Sesion");
         System.out.println("13. Cerrar el programa");
@@ -115,7 +119,7 @@ public class Menu {
               System.out.println("* * * * * Add * * * * *");
               System.out.println("Ingrese el ID");
               Integer idDoc = scan.nextInt();
-              System.out.println("Ingrese el contenido a añadir");
+              System.out.println("Ingrese contenido");
               scan.nextLine();
               String text = scan.nextLine();
               controller.add(controller.getLogeado(), idDoc, text);
@@ -124,7 +128,7 @@ public class Menu {
               System.out.println("* * * * * Rollback * * * * *");
               System.out.println("Ingrese id documento");
               Integer idDocc = scan.nextInt();
-              System.out.println("Ingrese id version para rollback");
+              System.out.println("Ingrese id version");
               Integer idVer = scan.nextInt();
               controller.rollback(controller.getLogeado(), idDocc, idVer);
               break;
@@ -145,12 +149,47 @@ public class Menu {
               System.out.println(controller.editorString(controller.getLogeado()));
               break;
             case 8:
+              System.out.println("* * * * * Delete * * * * *");
+              System.out.println("Ingrese el ID");
+              Integer iDoc = scan.nextInt();
+              System.out.println("Ingrese el numero de caracteres a eliminar");
+              int deleteC = scan.nextInt();
+              controller.delete(controller.getLogeado(), iDoc, deleteC);
               break;
             case 9:
+              System.out.println("* * * * * Search and Replace * * * * *");
+              System.out.println("Ingrese id version");
+              Integer idRep = scan.nextInt();
+              scan.nextLine();
+              System.out.println("Ingrese el texto buscado");
+              String sText = scan.nextLine();
+              System.out.println("Ingrese el texto a reemplazar");
+              String repText = scan.nextLine();
+              controller.searchAndReplace(controller.getLogeado(), idRep, sText, repText);
               break;
             case 10:
+              String styls = "";
+              System.out.println("* * * * * Apply Styles * * * * *");
+              System.out.println("Ingrese id version");
+              Integer idAp = scan.nextInt();
+              scan.nextLine();
+              System.out.println("Ingrese el texto buscado");
+              String saText = scan.nextLine();
+              System.out.println("Ingrese los estilos del tipo [#\\i, #\\u #\\b] separados por espacio [_]");
+              styls += scan.nextLine();
+              String[] styles = styls.split(" ");
+              controller.applyStyles(controller.getLogeado(), idAp, saText, styles);
               break;
             case 11:
+              System.out.println("* * * * * Comment * * * * *");
+              System.out.println("Ingrese id version");
+              Integer idR = scan.nextInt();
+              scan.nextLine();
+              System.out.println("Ingrese el texto a comentar");
+              String cText = scan.nextLine();
+              System.out.println("Ingrese el comentario");
+              String rText = scan.nextLine();
+              controller.comment(controller.getLogeado(), idR, cText, rText);
               break;
             case 12:
               controller.logout();
