@@ -13,10 +13,6 @@ public class Menu {
     this.controller = controller;
   }
 
-  public Controller getController() {
-    return controller;
-  }
-
   public void setController(Controller controller) {
     this.controller = controller;
   }
@@ -27,7 +23,7 @@ public class Menu {
     int select;
     String username;
     String password;
-    Controller controller = getController();
+    Controller controller = this.controller;
     while (!exit) {
       if (!controller.isLogeado()) {
         System.out.println("### EDITOR COLABORATIVO ###");
@@ -59,7 +55,7 @@ public class Menu {
               controller.login(username, password);
               break;
             case 3:
-              System.out.println(controller.pDocsToString());
+              System.out.println(controller.editorToString());
               break;
             case 4:
               exit = true;
@@ -68,7 +64,7 @@ public class Menu {
               break;
           }
         } catch (Exception e) {
-          System.out.println("Debe ingresar solo numeros");
+          System.out.println("Ingrese solo numeros");
           scan.next();
         }
       } else {
@@ -144,7 +140,7 @@ public class Menu {
               controller.search(controller.getLogeado(), searchText);
               break;
             case 7:
-              System.out.println(controller.editorString(controller.getLogeado()));
+              System.out.println(controller.editorStringLogeado(controller.getLogeado()));
               break;
             case 8:
               System.out.println("* * * * * Delete * * * * *");

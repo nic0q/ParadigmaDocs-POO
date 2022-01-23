@@ -25,11 +25,6 @@ public class Editor {
     usuarios.add(user3);
     usuarios.add(user4);
     usuarios.add(user5);
-    // Usuario user6 = new Usuario("kevin", "9876");
-    // Usuario user7 = new Usuario("mike", "1234");
-    // Usuario user8 = new Usuario("gustavo", "password");
-    // Usuario user9 = new Usuario("victor", "456");
-    // Usuario user10 = new Usuario("nacho", "84265");
 
     // Se crea el documento 1 perteneciente a user1 "nico"
     Documento doc1 = new Documento("Informe 1", "Introduccion", user1);

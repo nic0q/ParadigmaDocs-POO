@@ -79,7 +79,7 @@ public class Comentario {
    */
   @Override
   public String toString() {
-    return " * * Comentario * * \n\t[" + autor.getUsername() + "] [" + fecha + "]" + "\n\t*" + contenido + "* -> ["
+    return "\n * * Comentario * * \n\t[" + autor.getUsername() + "] [" + fecha + "]" + "\n\t* " + contenido + " * -> ["
         + comentario
         + "]";
 

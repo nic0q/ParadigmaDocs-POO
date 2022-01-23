@@ -14,7 +14,7 @@ public class Controller {
 
   // Constructor
   /**
-   * @param paradigmaDocs instancia de la clase ParadigmaDocs
+   * @param paradigmaDocs instancia de la clase editor
    */
   public Controller(Editor paradigmaDocs) {
     this.paradigmaDocs = paradigmaDocs;
@@ -43,7 +43,6 @@ public class Controller {
     return pDocs.isConectado();
   }
   // Métodos
-  // Register
 
   /**
    * Método que permite registrar un nuevo usuario en paradigmaDocs
@@ -263,19 +262,10 @@ public class Controller {
    * 
    * @return StringBuilder
    */
-  public StringBuilder pDocsToString() {
+  public StringBuilder editorToString() {
     StringBuilder string = new StringBuilder();
-    string.append("* * * * * * * * * * ParadigmaDocs * * * * * * * * * *\n\n");
-    string.append("-> Usuarios registrados:");
-    for (int i = 0; i < paradigmaDocs.getUsuarios().size(); i++) {
-      string
-          .append(
-              "\n\tUsuario: " + paradigmaDocs.getUsuarios().get(i).getUsername() + " miebro desde ["
-                  + paradigmaDocs
-                      .getUsuarios().get(i).getFecha()
-                  + "]");
-    }
-    string.append("\n\n-> Documentos:");
+    string.append("* * * * * * * * * * ParadigmaDocs * * * * * * * * * *\n");
+    string.append("-> Documentos:");
     for (int j = 0; j < paradigmaDocs.getDocumentos().size(); j++) {
       string.append("\n\t* * * * * " + paradigmaDocs.getDocumentos().get(j).getTitulo() + " id("
           + paradigmaDocs.getDocumentos().get(j).getId() + ") * * * * * ");
@@ -299,7 +289,7 @@ public class Controller {
    * @param logeado Usuario logeado
    * @return StringBuilder
    */
-  public StringBuilder editorString(Usuario logeado) {
+  public StringBuilder editorStringLogeado(Usuario logeado) {
     StringBuilder editorString = new StringBuilder();
     editorString.append("* * * * * * * * * * " + logeado.getUsername() + " * * * * * * * * * *\n" + "Miembro desde ["
         + logeado.getFecha() + "]");
@@ -307,13 +297,19 @@ public class Controller {
       editorString.append("\n\t* * * * * " + logeado.getDocsCreados().get(i).getTitulo() + " id("
           + logeado.getDocsCreados().get(i).getId() + ") * * * * * \n"
           + logeado.getDocsCreados().get(i).getContenido() + "\nNumero de versiones ["
-          + logeado.getDocsCreados().get(i).getHistorial().size() + "]\n");
+          + logeado.getDocsCreados().get(i).getHistorial().size() + "]");
+      editorString.append("\n-> Permisos");
+      for (int j = 0; j < logeado.getDocsCreados().get(i).getAccesses().size(); j++) {
+        editorString.append("\n\t" + logeado.getDocsCreados().get(i).getAccesses().get(j).getUser().getUsername()
+            + " -> " + logeado.getDocsCreados().get(i).getAccesses().get(j).accessToString());
+      }
       int n_versiones = logeado.getDocsCreados().get(i).getHistorial().size();
       for (int k = 0; k < logeado.getDocsCreados().get(i).getHistorial().get(n_versiones - 1).getComentarios()
           .size(); k++) {
         editorString.append(logeado.getDocsCreados().get(i).getHistorial().get(n_versiones - 1).getComentarios().get(k)
             .toString());
       }
+
     }
     editorString.append("\nDocumentos con acceso: ");
     for (int i = 0; i < logeado.getDocsAcceso().size(); i++) {// String Version Activa
