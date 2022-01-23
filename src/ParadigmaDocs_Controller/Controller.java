@@ -5,7 +5,7 @@ import ParadigmaDocs_Model.*;
 /**
  * Controller
  * Clase donde se crean los métodos funcionales de ParadigmaDocs
- * 
+ *
  * @author Nícolas Farfán Cheneaux
  */
 public class Controller {
@@ -46,7 +46,7 @@ public class Controller {
 
   /**
    * Método que permite registrar un nuevo usuario en paradigmaDocs
-   * 
+   *
    * @param username El username del usurio
    * @param password La contraseña del usuario
    */
@@ -64,7 +64,7 @@ public class Controller {
 
   /**
    * Método que permite iniciar sesión a un usuario previamente registrado
-   * 
+   *
    * @param username El username del usurio
    * @param password La contraseña del usuario
    */
@@ -92,7 +92,7 @@ public class Controller {
 
   /**
    * Método que permite crear un documento en la plataforma a un usuario
-   * 
+   *
    * @param titulo    Titulo del documento
    * @param logeado   Usuario logeado
    * @param contenido Contenido del documento a crear
@@ -107,7 +107,7 @@ public class Controller {
 
   /**
    * Método que permite compartir un documento al dueño de este
-   * 
+   *
    * @param logeado         Usuario logeado
    * @param id              Id del documento
    * @param usuariosPermiso lista usuarios que se quiere dar el permiso
@@ -147,7 +147,7 @@ public class Controller {
   /**
    * Método que permite añadir texto a una version del documento, se requiere
    * permiso de edición.
-   * 
+   *
    * @param logeado   Usuario logeado
    * @param id        Id del documento
    * @param contenido Contenido del documento
@@ -181,7 +181,7 @@ public class Controller {
   /**
    * Método que permite restaurar una version anterior del documento, es decir
    * esta pasa a ser la versión activa
-   * 
+   *
    * @param logeado Usuario logeado
    * @param id      Id del documento
    * @param idVer   Id de la version
@@ -196,7 +196,7 @@ public class Controller {
       if (logeado.getDocsCreados().get(index).getHistorial().get(i).getId().equals(idVer)) {
         String contenido = logeado.getDocsCreados().get(index).getHistorial().get(i).getContenido();
         logeado.getDocsCreados().get(index).setContenido(contenido);
-        System.out.println(contenido);
+        System.out.println("Versión restaurada correctamente");
         return;
       }
     }
@@ -206,7 +206,7 @@ public class Controller {
 
   /**
    * Método que permite revocar todos los accesos a un documento
-   * 
+   *
    * @param logeado Usuario logeado
    * @param id      Id del documento
    */
@@ -223,7 +223,7 @@ public class Controller {
 
   /**
    * Método que permite buscar texto en un documento propio o compartido
-   * 
+   *
    * @param logeado    Usuario logeado
    * @param searchText Texto a buscar
    */
@@ -259,7 +259,7 @@ public class Controller {
 
   /**
    * Método que convierte toda la plataforma de paradigmadocs a String
-   * 
+   *
    * @return StringBuilder
    */
   public StringBuilder editorToString() {
@@ -285,7 +285,7 @@ public class Controller {
   /**
    * Metodo que convierte a string todos los documentos creados o compartidos a un
    * String ententidble por el usuario
-   * 
+   *
    * @param logeado Usuario logeado
    * @return StringBuilder
    */
@@ -309,9 +309,7 @@ public class Controller {
         editorString.append(logeado.getDocsCreados().get(i).getHistorial().get(n_versiones - 1).getComentarios().get(k)
             .toString());
       }
-
     }
-    editorString.append("\nDocumentos con acceso: ");
     for (int i = 0; i < logeado.getDocsAcceso().size(); i++) {// String Version Activa
       editorString
           .append("\n\t* * * * * " + logeado.getDocsAcceso().get(i).getTitulo() + " id("
@@ -332,7 +330,7 @@ public class Controller {
   /**
    * Método que permite eliminar texto de la versión activa de un documento, se
    * requiere permiso de edición.
-   * 
+   *
    * @param logeado Usuario logeado
    * @param id      Id del documento
    * @param delete  Caracteres a eliminar
@@ -378,7 +376,7 @@ public class Controller {
   /**
    * Método que permite buscar y reemplazar texto de la versión activa de un
    * documento, se requiere permiso de edición.
-   * 
+   *
    * @param logeado     Usuario logeado
    * @param id          Id del documento
    * @param searchText  Texto a buscar
@@ -472,7 +470,7 @@ public class Controller {
 
   /**
    * Método que determina si un usuario es editor de un documento mediante su id
-   * 
+   *
    * @param logeado Usuario logeado
    * @param id      Id del documento
    * @return boolean
@@ -494,7 +492,7 @@ public class Controller {
 
   /**
    * Método que obtiene el indice de la lista de documentos con acceso del usuario
-   * 
+   *
    * @param id      Id del documento
    * @param logeado Usuario logeado
    * @return Integer
@@ -511,7 +509,7 @@ public class Controller {
   /**
    * Método que obtiene el indice de la lista de documentos que el usuario es
    * dueño
-   * 
+   *
    * @param id      Id del documento
    * @param logeado Usuario logeado
    * @return Integer

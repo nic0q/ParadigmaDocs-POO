@@ -1,7 +1,7 @@
 package main;
 
 import ParadigmaDocs_Controller.Controller;
-import ParadigmaDocs_Model.*; // Se importa el modelo
+import ParadigmaDocs_Model.*;
 import ParadigmaDocs_View.Menu;
 
 public class main {

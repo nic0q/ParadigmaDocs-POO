@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 /**
  * Clase Documento, nativa de el modelo, almacena la estructura de un documento
  * pregunta.
- * 
+ *
  * @author Nicolas Farfán Cheneaux
  */
 
@@ -26,7 +26,7 @@ public class Documento {
 
   /**
    * Constructor de un documento
-   * 
+   *
    * @param titulo    titulo de un documento
    * @param contenido contenido de un documento
    */
@@ -152,5 +152,4 @@ public class Documento {
   public void setHistorial(ArrayList<Version> historial) {
     this.historial = historial;
   }
-
 }

@@ -93,13 +93,4 @@ public class Usuario {
   public void setDocsAcceso(ArrayList<Documento> docsAcceso) {
     this.docsAcceso = docsAcceso;
   }
-
-  /**
-   * @return String
-   */
-  @Override
-  public String toString() {
-    return "Usuario [docsAcceso=" + docsAcceso + ", docsCreados=" + docsCreados + ", fecha=" + fecha + ", password="
-        + password + ", username=" + username + "]";
-  }
 }
