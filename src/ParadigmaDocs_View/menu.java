@@ -1,6 +1,5 @@
 package ParadigmaDocs_View;
 
-//import ParadigmaDocs_Model.*;
 import ParadigmaDocs_Controller.*;
 import java.util.Scanner;
 
@@ -23,7 +22,6 @@ public class Menu {
   }
 
   public void menu() {
-    // se crea el objeto scanner
     Scanner scan = new Scanner(System.in);
     boolean exit = false;
     int select;
@@ -104,7 +102,7 @@ public class Menu {
             case 2:
               String users = "";
               System.out.println("* * * * * Share * * * * *");
-              System.out.println("Ingrese el id del documento al que quiere conceder permisos");
+              System.out.println("Ingrese el ID del documento al que quiere conceder permisos");
               Integer id = scan.nextInt();
               System.out.println("Ingrese los usuarios separados por espacio");
               scan.nextLine();
@@ -126,7 +124,7 @@ public class Menu {
               break;
             case 4:
               System.out.println("* * * * * Rollback * * * * *");
-              System.out.println("Ingrese id documento");
+              System.out.println("Ingrese ID documento");
               Integer idDocc = scan.nextInt();
               System.out.println("Ingrese id version");
               Integer idVer = scan.nextInt();
@@ -134,7 +132,7 @@ public class Menu {
               break;
             case 5:
               System.out.println("* * * * * Revoke Access * * * * *");
-              System.out.println("Ingrese id documento");
+              System.out.println("Ingrese ID documento");
               Integer idDc = scan.nextInt();
               controller.revokeAccess(controller.getLogeado(), idDc);
               break;
@@ -158,7 +156,7 @@ public class Menu {
               break;
             case 9:
               System.out.println("* * * * * Search and Replace * * * * *");
-              System.out.println("Ingrese id version");
+              System.out.println("Ingrese ID documento");
               Integer idRep = scan.nextInt();
               scan.nextLine();
               System.out.println("Ingrese el texto buscado");
@@ -170,7 +168,7 @@ public class Menu {
             case 10:
               String styls = "";
               System.out.println("* * * * * Apply Styles * * * * *");
-              System.out.println("Ingrese id version");
+              System.out.println("Ingrese ID documento");
               Integer idAp = scan.nextInt();
               scan.nextLine();
               System.out.println("Ingrese el texto buscado");
@@ -182,7 +180,7 @@ public class Menu {
               break;
             case 11:
               System.out.println("* * * * * Comment * * * * *");
-              System.out.println("Ingrese id version");
+              System.out.println("Ingrese ID documento");
               Integer idR = scan.nextInt();
               scan.nextLine();
               System.out.println("Ingrese el texto a comentar");

@@ -137,7 +137,7 @@ public class Controller {
               Acceso acceso = new Acceso(pDocs.getUsuarios().get(j), access);
               logeado.getDocsCreados().get(i).getAccesses().add(acceso);
               pDocs.getUsuarios().get(j).getDocsAcceso().add(logeado.getDocsCreados().get(i));
-              System.out.println("Permiso concedido a " + usuariosPermiso[k]);
+              System.out.println("Permiso [" + access + "] concedido a " + usuariosPermiso[k]);
             }
           }
         }
@@ -234,23 +234,28 @@ public class Controller {
   public void search(Usuario logeado, String searchText) {
     int found = 0;
     for (int i = 0; i < logeado.getDocsCreados().size(); i++) {
-      if (logeado.getDocsCreados().get(i).getContenido().contains(searchText)) {
-        System.out.println("id(" + logeado.getDocsCreados().get(i).getId() + ") " + logeado.getDocsCreados().get(i)
-            .getTitulo());
-        found = 1;
+      for (int j = 0; j < logeado.getDocsCreados().get(i).getHistorial().size(); j++) {
+        if (logeado.getDocsCreados().get(i).getHistorial().get(j).getContenido().contains(searchText)) {
+          System.out.println("id(" + logeado.getDocsCreados().get(i).getId() + ") " + logeado.getDocsCreados().get(i)
+              .getTitulo());
+          found = 1;
+        }
       }
     }
     for (int i = 0; i < logeado.getDocsAcceso().size(); i++) {
-      if (logeado.getDocsAcceso().get(i).getContenido().contains(searchText)) {
-        System.out.println("id(" + logeado.getDocsAcceso().get(i).getId() + ") " + logeado.getDocsAcceso().get(i)
-            .getTitulo());
-
-        found = 1;
+      for (int j = 0; j < logeado.getDocsAcceso().get(i).getHistorial().size(); j++) {
+        if (logeado.getDocsAcceso().get(i).getHistorial().get(j).getContenido().contains(searchText)) {
+          System.out.println("id(" + logeado.getDocsAcceso().get(i).getId() + ") " + logeado.getDocsAcceso().get(i)
+              .getTitulo());
+          found = 1;
+        }
       }
     }
     if (found != 1) {
       System.out.println("No se ha encontrado texto");
+      return;
     }
+    return;
   }
 
   /**
@@ -274,22 +279,14 @@ public class Controller {
     for (int j = 0; j < paradigmaDocs.getDocumentos().size(); j++) {
       string.append("\n\t* * * * * " + paradigmaDocs.getDocumentos().get(j).getTitulo() + " id("
           + paradigmaDocs.getDocumentos().get(j).getId() + ") * * * * * ");
-
+      int n_versiones = paradigmaDocs.getDocumentos().get(j).getHistorial().size();
       string.append("\nCreado por " + paradigmaDocs.getDocumentos().get(j).getAutor().getUsername() + " el ["
-          + paradigmaDocs.getDocumentos().get(j).getFecha() + "]");
-
-      string.append("\n" + paradigmaDocs.getDocumentos().get(j).getContenido() + "\nVersiones:");
-      for (int i = 0; i < paradigmaDocs.getDocumentos().get(j).getHistorial().size(); i++) {
-        string.append("\n\t(" + paradigmaDocs.getDocumentos().get(j).getHistorial().get(i).getId() + ") "
-            + paradigmaDocs.getDocumentos().get(j).getHistorial().get(i).getContenido());
-      }
-      string
-          .append("\n-> Permisos ");// String Permisos
-      for (int k = 0; k < paradigmaDocs.getDocumentos().get(j).getAccesses().size(); k++) {
-        string
-            .append("\n\t" + paradigmaDocs
-                .getDocumentos().get(j).getAccesses().get(k).getUser().getUsername()
-                + " -> " + paradigmaDocs.getDocumentos().get(j).getAccesses().get(k).accessToString());
+          + paradigmaDocs.getDocumentos().get(j).getFecha() + "]" + "\nNumero de versiones ["
+          + n_versiones + "]\n");
+      for (int k = 0; k < paradigmaDocs.getDocumentos().get(j).getHistorial().get(n_versiones - 1).getComentarios()
+          .size(); k++) {
+        string.append(paradigmaDocs.getDocumentos().get(j).getHistorial().get(n_versiones - 1).getComentarios().get(k)
+            .toString());
       }
     }
     return string;
@@ -309,48 +306,28 @@ public class Controller {
     for (int i = 0; i < logeado.getDocsCreados().size(); i++) { // String Version Activa
       editorString.append("\n\t* * * * * " + logeado.getDocsCreados().get(i).getTitulo() + " id("
           + logeado.getDocsCreados().get(i).getId() + ") * * * * * \n"
-          + logeado.getDocsCreados().get(i).getContenido());
-
-      for (int j = 0; j < logeado.getDocsCreados().get(i).getHistorial().size(); j++) { // String Versiones
-        editorString.append("\n(" + logeado
-            .getDocsCreados().get(i).getHistorial().get(j).getId() + ") "
-            + logeado.getDocsCreados().get(i).getHistorial().get(j).getContenido() + " ["
-            + logeado.getDocsCreados().get(i).getFecha() + "]");
-        for (int j2 = 0; j2 < logeado.getDocsCreados().get(i).getHistorial().get(j).getComentarios().size(); j2++) {
-          editorString
-              .append("\n\t"
-                  + logeado.getDocsCreados().get(i).getHistorial().get(j).getComentarios().get(i).toString());
-        }
-      }
-      editorString.append("\n-> Permisos");
-      for (int j = 0; j < logeado.getDocsCreados().get(i).getAccesses().size(); j++) {
-        editorString.append("\n\t" + logeado.getDocsCreados().get(i).getAccesses().get(j).getUser().getUsername()
-            + " -> " + logeado.getDocsCreados().get(i).getAccesses().get(j).accessToString());
+          + logeado.getDocsCreados().get(i).getContenido() + "\nNumero de versiones ["
+          + logeado.getDocsCreados().get(i).getHistorial().size() + "]\n");
+      int n_versiones = logeado.getDocsCreados().get(i).getHistorial().size();
+      for (int k = 0; k < logeado.getDocsCreados().get(i).getHistorial().get(n_versiones - 1).getComentarios()
+          .size(); k++) {
+        editorString.append(logeado.getDocsCreados().get(i).getHistorial().get(n_versiones - 1).getComentarios().get(k)
+            .toString());
       }
     }
     editorString.append("\nDocumentos con acceso: ");
     for (int i = 0; i < logeado.getDocsAcceso().size(); i++) {// String Version Activa
       editorString
           .append("\n\t* * * * * " + logeado.getDocsAcceso().get(i).getTitulo() + " id("
-              + logeado.getDocsAcceso().get(i).getId() + ") * * * * * ");
-      editorString
-          .append("\nAutor: " + logeado.getDocsAcceso().get(i).getAutor().getUsername());
-      editorString
-          .append("\n" + logeado.getDocsAcceso().get(i).getContenido());
-      for (int j = 0; j < logeado.getDocsAcceso().get(i).getHistorial().size(); j++) {// String Versiones
-        editorString
-            .append("\n(" + logeado
-                .getDocsAcceso().get(i).getHistorial().get(j).getId() + ") "
-                + logeado.getDocsAcceso().get(i).getHistorial().get(j).getContenido() + " ["
-                + logeado.getDocsAcceso().get(i).getFecha() + "]"
-                + logeado.getDocsAcceso().get(i).getHistorial().get(j).getComentarios().toString());
-      }
-      editorString
-          .append("\n-> Permisos ");// String Permisos
-      for (int j = 0; j < logeado.getDocsAcceso().get(i).getAccesses().size(); j++) {
-        editorString
-            .append("\n\t" + logeado.getDocsAcceso().get(i).getAccesses().get(j).getUser().getUsername()
-                + " -> " + logeado.getDocsAcceso().get(i).getAccesses().get(j).accessToString());
+              + logeado.getDocsAcceso().get(i).getId() + ") * * * * * " + "\nAutor: "
+              + logeado.getDocsAcceso().get(i).getAutor().getUsername() + "\n"
+              + logeado.getDocsAcceso().get(i).getContenido() + "\nNumero de versiones ["
+              + logeado.getDocsAcceso().get(i).getHistorial().size() + "]\n");
+      int n_versiones = logeado.getDocsAcceso().get(i).getHistorial().size();
+      for (int k = 0; k < logeado.getDocsAcceso().get(i).getHistorial().get(n_versiones - 1).getComentarios()
+          .size(); k++) {
+        editorString.append(logeado.getDocsAcceso().get(i).getHistorial().get(n_versiones - 1).getComentarios().get(k)
+            .toString());
       }
     }
     return editorString;
@@ -484,8 +461,7 @@ public class Controller {
     if (getIndexDocCreados(id, logeado) != -1) {
       if (logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).getContenido().contains(searchText)) {
         Comentario comentarios = new Comentario(logeado, searchText, comentario);
-        reemplazo = logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).getContenido().replace(searchText,
-            "*" + searchText + "*");
+        reemplazo = logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).getContenido();
         Version version = new Version(reemplazo);
         version.setId(logeado.getDocsCreados().get(getIndexDocCreados(id, logeado)).getHistorial().size());
         version.getComentarios().add(comentarios);

@@ -119,7 +119,7 @@ public class Editor {
   }
 
   /**
-   * @param logeado
+   * @param logeado usuario logeado
    */
   public void setLogeado(Usuario logeado) {
     this.logeado = logeado;
@@ -133,7 +133,7 @@ public class Editor {
   }
 
   /**
-   * @param conectado
+   * @param conectado boolean si esta conectado
    */
   public void setConectado(boolean conectado) {
     this.conectado = conectado;

@@ -55,7 +55,7 @@ public class Documento {
   }
 
   /**
-   * @param permisos
+   * @param permisos arraylist permisos
    */
   public void setAccesses(ArrayList<Acceso> permisos) {
     this.permisos = permisos;
@@ -77,7 +77,7 @@ public class Documento {
   }
 
   /**
-   * @param autor
+   * @param autor autor documento
    */
   public void setAutor(Usuario autor) {
     this.autor = autor;
@@ -91,7 +91,7 @@ public class Documento {
   }
 
   /**
-   * @param id
+   * @param id id documento
    */
   public void setId(Integer id) {
     this.id = id;
@@ -105,7 +105,7 @@ public class Documento {
   }
 
   /**
-   * @param fecha
+   * @param fecha fecha de creacion
    */
   public void setFecha(String fecha) {
     this.fecha = fecha;
@@ -133,7 +133,7 @@ public class Documento {
   }
 
   /**
-   * @param titulo
+   * @param titulo titulo documento
    */
   public void setTitulo(String titulo) {
     this.titulo = titulo;
@@ -147,7 +147,7 @@ public class Documento {
   }
 
   /**
-   * @param historial
+   * @param historial arraylist historial
    */
   public void setHistorial(ArrayList<Version> historial) {
     this.historial = historial;
