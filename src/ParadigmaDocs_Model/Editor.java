@@ -100,7 +100,7 @@ public class Editor {
   }
 
   /**
-   * @param documentos
+   * @param documentos documentos del editor
    */
   public void setDocumentos(ArrayList<Documento> documentos) {
     this.documentos = documentos;

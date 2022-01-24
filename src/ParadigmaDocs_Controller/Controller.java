@@ -442,7 +442,7 @@ public class Controller {
   }
 
   /**
-   * Método que permite comentar un texto de la versión activa, , se requiere
+   * Método que permite comentar un texto de la versión activa, se requiere
    * permiso de comentarios.
    *
    * @param logeado    Usuario logeado

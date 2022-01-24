@@ -26,49 +26,49 @@ public class Comentario {
   }
 
   /**
-   * @param comentario
+   * @param comentario comentario
    */
   public void setComentario(String comentario) {
     this.comentario = comentario;
   }
 
   /**
-   * @return String
+   * @return String fecha del comentario
    */
   public String getFecha() {
     return fecha;
   }
 
   /**
-   * @param fecha
+   * @param fecha fecha del comentario
    */
   public void setFecha(String fecha) {
     this.fecha = fecha;
   }
 
   /**
-   * @return Usuario
+   * @return Usuario del comentario
    */
   public Usuario getAutor() {
     return autor;
   }
 
   /**
-   * @param autor
+   * @param autor del comentario
    */
   public void setAutor(Usuario autor) {
     this.autor = autor;
   }
 
   /**
-   * @return String
+   * @return String contenido del comentario
    */
   public String getContenido() {
     return contenido;
   }
 
   /**
-   * @param contenido
+   * @param contenido  contenido del comentario
    */
   public void setContenido(String contenido) {
     this.contenido = contenido;

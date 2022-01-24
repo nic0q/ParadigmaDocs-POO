@@ -46,21 +46,21 @@ public class Usuario {
   }
 
   /**
-   * @param username
+   * @param username userrname del usuario
    */
   public void setUsername(String username) {
     this.username = username;
   }
 
   /**
-   * @return String
+   * @return String contraseña del usuario
    */
   public String getPassword() {
     return password;
   }
 
   /**
-   * @param password
+   * @param password contraseña del usuario
    */
   public void setPassword(String password) {
     this.password = password;
@@ -74,21 +74,21 @@ public class Usuario {
   }
 
   /**
-   * @param docsCreados
+   * @param docsCreados documentos creados
    */
   public void setDocsCreados(ArrayList<Documento> docsCreados) {
     this.docsCreados = docsCreados;
   }
 
   /**
-   * @return ArrayList<Documento>
+   * @return ArrayList<Documento> documentos con acceso
    */
   public ArrayList<Documento> getDocsAcceso() {
     return docsAcceso;
   }
 
   /**
-   * @param docsAcceso
+   * @param docsAcceso documentos con acceso
    */
   public void setDocsAcceso(ArrayList<Documento> docsAcceso) {
     this.docsAcceso = docsAcceso;
